@@ -9,10 +9,10 @@ class Solution {
 public:
     bool isValid(string s)
     {
-        bool flag =false;
+        bool flag = false;
         stack<char> S;
         for (int i = 0; i < s.size(); ++i) {
-            flag=false;
+            flag = false;
             switch (s[i]) {
             case '(':
                 S.push(s[i]);
@@ -54,7 +54,8 @@ public:
                 break;
             }
         }
-        if(!S.empty())return false;
+        if (!S.empty())
+            return false;
         return flag;
     }
 };
