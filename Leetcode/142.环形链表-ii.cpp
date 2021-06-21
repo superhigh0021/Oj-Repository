@@ -15,9 +15,21 @@
  */
 class Solution {
 public:
-    ListNode *detectCycle(ListNode *head) {
-        
+    ListNode* detectCycle(ListNode* head)
+    {
+        ListNode *slow = head, *fast = head;
+        do {
+            if (fast == nullptr || fast->next == nullptr)
+                return nullptr;
+            fast = fast->next->next;
+            slow = slow->next;
+        } while (slow != fast);
+        fast = head;
+        while (fast != slow) {
+            fast = fast->next;
+            slow = slow->next;
+        }
+        return fast;
     }
 };
 // @lc code=end
-
