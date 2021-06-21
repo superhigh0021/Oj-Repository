@@ -15,54 +15,35 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution {
+class Solution
+{
 public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
+    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2)
     {
-        ListNode* l = new ListNode;
-        ListNode* s = l;
+        ListNode *head = nullptr, *tail = nullptr;
         int carry = 0;
-        while (l1 || l2) {
-            if (l1 && l2) {
-                if (l1->val + l2->val + carry >= 10)
-                    l->val = l1->val + l2->val - 10 + carry;
-                else {
-                    l->val = l1->val + l2->val + carry;
-                    carry = 0;
-                }
-                if (l1->val + l2->val >= 10)
-                    carry = 1;
-                l1 = l1->next;
-                l2 = l2->next;
-            } else if (l1 && !l2) {
-                if (l1->val + carry >= 10) {
-                    l->val = l1->val + carry - 10;
-                    carry = 1;
-                } else {
-                    l->val = l1->val + carry;
-                    carry = 0;
-                }
-                l1 = l1->next;
-            } else if (!l1 && l2) {
-                if (l2->val + carry >= 10) {
-                    l->val = l2->val + carry - 10;
-                    carry = 1;
-                } else {
-                    l->val = l2->val + carry;
-                    carry = 0;
-                }
-                l2 = l2->next;
+        while (l1 || l2)
+        {
+            int value1, value2, sum;
+            value1 = l1 ? l1->val : 0;
+            value2 = l2 ? l2->val : 0;
+            sum = value1 + value2 + carry;
+            if (!head)
+                head = tail = new ListNode(sum % 10);
+            else
+            {
+                tail->next = new ListNode(sum % 10);
+                tail = tail->next;
             }
-            if (l1 || l2 || carry != 0) {
-                l->next = new ListNode;
-                l = l->next;
-                if (!l1 && !l2) {
-                    l->val = carry;
-                    break;
-                }
-            }
+            carry = sum / 10;
+            if (l1)
+                l1 = l1->next;
+            if (l2)
+                l2 = l2->next;
         }
-        return s;
+        if(carry>0)
+            tail->next=new ListNode(carry);
+        return head;
     }
 };
 // @lc code=end
